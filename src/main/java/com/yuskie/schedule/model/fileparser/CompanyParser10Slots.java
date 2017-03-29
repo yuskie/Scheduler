@@ -8,14 +8,16 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.yuskie.schedule.model.Company;
+import com.yuskie.schedule.model.Schedule;
 import com.yuskie.schedule.model.Slot;
 
 public class CompanyParser10Slots implements CompanyParser {
 
 	private File companyFile;
+	private Schedule schedule;
 
-	public CompanyParser10Slots() {
-		companyFile = new File("companies10Slots.csv");
+	public CompanyParser10Slots(Schedule schedule) {
+		companyFile = new File("dummySlots.csv");
 		if (!companyFile.exists()) {
 			System.out.println("File not found: " + companyFile.getAbsolutePath());
 			System.exit(1);
@@ -23,6 +25,7 @@ public class CompanyParser10Slots implements CompanyParser {
 			System.out.println("That is not a file!" + companyFile.getAbsolutePath());
 			System.exit(1);
 		}
+		this.schedule = schedule;
 	}
 
 	@Override
@@ -35,8 +38,9 @@ public class CompanyParser10Slots implements CompanyParser {
 				Company theCompany = new Company();
 				String companyName = company.split("[|]+")[1];
 				theCompany.setName(companyName);
-
-				boolean contains = false;
+				theCompany.setTimes(schedule.getDays());
+				companies.add(theCompany);
+				/*boolean contains = false;
 				for (Company c : companies) {
 					if (theCompany.getName().equals(c.getName())) {
 						int day = Integer.parseInt(company.split("[|]+")[0]);
@@ -55,8 +59,8 @@ public class CompanyParser10Slots implements CompanyParser {
 					companies.add(theCompany);
 					theCompany.setTimes(times);
 				}
-			}
-		} catch (Exception e) {
+			}*/
+		}} catch (Exception e) {
 
 		}
 		return companies;
