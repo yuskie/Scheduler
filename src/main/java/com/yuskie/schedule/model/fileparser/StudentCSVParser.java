@@ -33,7 +33,7 @@ public class StudentCSVParser implements StudentInputParser{
 				String line = fileScanner.nextLine();
 				Student student = new Student();
 				String[] lineArray = line.split("[|]+");
-				String studentName = lineArray[1];
+				String studentName = lineArray[0];
 				student.setName(studentName);
 				List<Company> studentPref = new ArrayList<>();
 				for(Company comp : companies){
@@ -59,6 +59,7 @@ public class StudentCSVParser implements StudentInputParser{
 		List<Student> studentList = students.parse();
 		for (Student student: studentList){
 			System.out.println(student.getName());
+			System.out.println(student.getPreferences().size());
 		}
 	}
 
