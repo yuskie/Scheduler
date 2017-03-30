@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.yuskie.schedule.model.Company;
+import com.yuskie.schedule.model.Schedule;
+import com.yuskie.schedule.model.ScheduleEngine;
 import com.yuskie.schedule.model.Student;
 
 public class StudentCSVParser implements StudentInputParser{
@@ -53,14 +55,15 @@ public class StudentCSVParser implements StudentInputParser{
 	}
 	
 	public static void main(String[] args){
-		CompanyParser10Slots companies = new CompanyParser10Slots();
+		ScheduleParser sp = new ScheduleParser();
+		Schedule schedule = sp.parseSchedule();
+		CompanyParser10Slots companies = new CompanyParser10Slots(schedule);
 		List<Company> comps = companies.parse();
 		StudentCSVParser students = new StudentCSVParser(comps);
 		List<Student> studentList = students.parse();
-		for (Student student: studentList){
-			System.out.println(student.getName());
-			System.out.println(student.getPreferences().size());
-		}
+		ScheduleEngine engine = new ScheduleEngine(studentList, comps, schedule);
+		Schedule genSched = engine.generateSchedule();
+		System.out.println(genSched);
 	}
 
 }
