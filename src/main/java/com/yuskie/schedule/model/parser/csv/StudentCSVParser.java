@@ -1,4 +1,4 @@
-package com.yuskie.schedule.model.fileparser;
+package com.yuskie.schedule.model.parser.csv;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,8 +9,9 @@ import com.yuskie.schedule.model.Company;
 import com.yuskie.schedule.model.Schedule;
 import com.yuskie.schedule.model.ScheduleEngine;
 import com.yuskie.schedule.model.Student;
+import com.yuskie.schedule.model.parser.StudentParser;
 
-public class StudentCSVParser implements StudentInputParser{
+public class StudentCSVParser implements StudentParser{
 	
 	private File studentFile;
 	private List<Company> companies;
@@ -52,18 +53,6 @@ public class StudentCSVParser implements StudentInputParser{
 
 		}
 		return students;
-	}
-	
-	public static void main(String[] args){
-		ScheduleParser sp = new ScheduleParser();
-		Schedule schedule = sp.parseSchedule();
-		CompanyParser10Slots companies = new CompanyParser10Slots(schedule);
-		List<Company> comps = companies.parse();
-		StudentCSVParser students = new StudentCSVParser(comps);
-		List<Student> studentList = students.parse();
-		ScheduleEngine engine = new ScheduleEngine(studentList, comps, schedule);
-		Schedule genSched = engine.generateSchedule();
-		System.out.println(genSched);
 	}
 
 }

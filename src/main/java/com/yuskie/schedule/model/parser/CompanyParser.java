@@ -1,4 +1,4 @@
-package com.yuskie.schedule.model.fileparser;
+package com.yuskie.schedule.model.parser;
 
 import java.util.List;
 

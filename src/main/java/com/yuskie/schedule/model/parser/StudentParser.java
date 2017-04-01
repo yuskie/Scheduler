@@ -1,10 +1,10 @@
-package com.yuskie.schedule.model.fileparser;
+package com.yuskie.schedule.model.parser;
 
 import java.util.List;
 
 import com.yuskie.schedule.model.Student;
 
-public interface StudentInputParser {
+public interface StudentParser {
 
 	public List<Student> parse(); 
 }

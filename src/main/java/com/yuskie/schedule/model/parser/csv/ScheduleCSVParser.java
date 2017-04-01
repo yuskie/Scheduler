@@ -1,4 +1,4 @@
-package com.yuskie.schedule.model.fileparser;
+package com.yuskie.schedule.model.parser.csv;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,12 +10,13 @@ import java.util.Scanner;
 
 import com.yuskie.schedule.model.Schedule;
 import com.yuskie.schedule.model.Slot;
+import com.yuskie.schedule.model.parser.ScheduleParser;
 
-public class ScheduleParser {
+public class ScheduleCSVParser implements ScheduleParser {
 
 	private File scheduleFile;
 
-	public ScheduleParser() {
+	public ScheduleCSVParser() {
 		scheduleFile = new File("spring_2017_schedule.csv");
 		if (!scheduleFile.exists()) {
 			System.out.println("File not found: " + scheduleFile.getAbsolutePath());
@@ -59,11 +60,5 @@ public class ScheduleParser {
 		return theSchedule;
 
 	}
-
-	public static void main(String[] args) {
-		ScheduleParser sp = new ScheduleParser();
-		Schedule theSchedule = sp.parseSchedule();
-		System.out.println(theSchedule.getDays().get(1).size());
-		System.out.println(theSchedule.getDays().get(2).size());
-	}
+	
 }

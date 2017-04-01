@@ -1,4 +1,4 @@
-package com.yuskie.schedule.model.fileparser;
+package com.yuskie.schedule.model.parser.csv;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.Scanner;
 import com.yuskie.schedule.model.Company;
 import com.yuskie.schedule.model.Schedule;
 import com.yuskie.schedule.model.Slot;
+import com.yuskie.schedule.model.parser.CompanyParser;
 
 public class CompanyParser10Slots implements CompanyParser {
 
