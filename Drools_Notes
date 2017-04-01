@@ -1,0 +1,114 @@
+Ref: https://www.youtube.com/watch?v=4rYUYAYeQ1U
+
+Drools Engine
+
+> Declarative Programming
+ 
+ - "Declaring" the what and not the "how"
+ - Describe the problem rather than define a solution
+ - "Recursive programming"
+ - individual items of knowledge so not tightly coupled
+ - you provide logic and engine provides control
+ - sequence matters ( not completely, but sort of? )
+ - Came from the AI ( now used to solve real business problems, but not explorations )
+   - Hard to understand since it's a lot AI based
+ - declarative techniques are useful in fact-based evalutions
+    - a single what can be used to solve problems with different how to core
+    - tackling non-deterministic problems
+ - Ex.
+    An imperative method for ensuring that you apply sunscreen if it is sunny outside
+      1. Step outside and determine if it is sunny.
+      2. If it is sunny then go to the bathroom and grab sunscreen 
+      
+    Declarative approach uses 3 simple rules:
+    - if it is sunny
+      -> then you need to apply sunscreen
+    - if you need sunscreen
+      -> then get it from the medicine cabinet
+    - if you need something from the medicine cabinet
+      -> go to the bathroom
+
+ [ Decouple things from each other ]
+
+> Rules and Rules Engine
+
+- Rule
+    - are a awy to encode knowledge
+    - discrete, mostly automic
+    - referred to as production rule in rule engine 
+  - if-then condition
+  - when <condition> then <action>
+  - typically simple things
+  - The firing of a rule can result in the addition or removal of existing rule
+  - facts are assertions you know about the object
+  Ex.
+    "When two people share a parent, they are siblings"
+   When
+    There are two people    }
+    and they share a parent }
+   then
+    they are simplings
+    
+- Rule engine
+  - a system that matches facts and data against the rules
+  - a system that derives a conclusion about environment
+  - One is data driven to jump to conclusion. Goal-driven is where you start from a goal and work backwards.
+  - "inference engine" is the pattern matching in rule engines
+    - different ways to do it, Linear (if we make), Rete
+    - depends on how much data you have (Rete eats memory focusing on speed)
+    
+> Forward, backward chaining
+ - Chaining is reasoning using rules to concatenate to form a logic
+  - Forward chaining is data driven, adding data to rule engine and state will change
+    - recursive programming sort of
+  - Backward chaining starts with the goal and works backwards to see if the state supports reaching the goal
+    - forward chaining ( discounts for customers  )
+    - backward chaining ( goal oriented such as finding oil )
+    
+> Rete Algorithm (net of nodes)
+  - been around since 1979
+  - efficiency is asymptotic independent of rules ( so it doens't degrade with more rules )
+  - Nodes?
+    - Imagine dropping a coin in one of those random machines that fall and bounce towards a landing point
+    - the pegs are like actions and where the coins land are the state
+    Ex. If a new customer spends 100 and is birthday u get 20% discount
+        if a new customer spends 100 you get 10% discount
+  
+  > Architecture of a rule based system
+   - Inference engine: pattern matcher
+   - Rule base: where rules are stored
+   - Working memory: Live java object live where at runtime they are matched with rule base
+   
+   1. Rules are matched against the facts in working memory (Rete's algorithmn)
+   2. The unordered list is conflict resolved
+   3. first rule of agenda is fired?
+   
+> Drools code
+  - Simple Domain
+  - Several rules based on title and time of day
+  Ex.
+        A rule to say GoodMorning
+    rule "GreetingGoodMorning"
+      when
+        hour:Integer(intValue >=0, <=11)    [Drool's syntax]
+      then
+        System.out.print("Good morning")    [Java code]
+    end
+    
+    
+      HOW-TO
+  1. Load the rules from DRL file
+  2. Crete a package
+  3. Create a rule-base
+  4. Instantiate a Working Memory
+  5. Assert some facts
+ 
+  Backward chaining makes rule engine keeps running
+  Forward chaining is data driven and more reasonable
+  
+  Don't use a primitive type of class. Use an object due to how the matching works
+  
+  - To make a chain you need to insert, remove in workingMemory
+    - can trigger rule based on absence of something
+    
+>Well it lacks code examples :(
