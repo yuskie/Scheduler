@@ -14,12 +14,14 @@ def main(args):
     args.pop(0)
     for file_name in args:
         create_files(file_name)
+        print file_name + " done"
+    print "All done"
 
 
 def create_files(file_name):
-    # generate_schedule(file_name)
+    generate_schedule(file_name)
     generate_company(file_name)
-    # generate_student(file_name)
+    generate_student(file_name)
 
 
 def generate_schedule(file_name):
@@ -34,7 +36,7 @@ def generate_schedule(file_name):
                 result.write(str(slot_counter) + "\n")
             company_array = line.split(",")
             company_array.pop(0)    #Remove date
-            result.write(str(day_counter+1) + "|")
+            result.write(str(day_counter) + "|")
             slot_counter = 0
             day_counter += 1
             start = False
@@ -73,7 +75,11 @@ def generate_company(file_name):
                     company_key = companies[start_counter+i-1]
                     company_dict[company_key].append(str(day_counter) + "," + str(slot_counter))
             slot_counter += 1
-
+    for company in company_dict:
+        result.write(company)
+        for time in company_dict[company]:
+            result.write("|"+time)
+        result.write("\n")
     result.close()
     file.close()
 
@@ -81,6 +87,37 @@ def generate_company(file_name):
 def generate_student(file_name):
     file = open(create_input_file_name(file_name), "r")
     result = open(create_output_file_name(file_name, FILES_STUDENT_TAG), "w")
+    student_dict = defaultdict(list)
+    companies = []
+    slot_counter = 0
+    pass_length = 0
+    day_counter = 0
+    start_counter = 0
+    for line in file:
+        if ":" not in line:
+            company_array = line.split(",")
+            company_array.pop(0)
+            start_counter += len(companies) - pass_length
+            pass_length = len(companies)
+            for company in company_array:
+                clean_string_company = company.rstrip().lstrip()
+                if clean_string_company:
+                    companies.append(clean_string_company)
+            slot_counter = 0
+            day_counter += 1
+        else:
+            appointments = line.split(",")
+            for i in range(1, len(appointments)):
+                appointment_cleaned = appointments[i].rstrip().lstrip()
+                if appointment_cleaned:
+                    company_key = companies[start_counter + i - 1]
+                    student_dict[appointment_cleaned].append(company_key)
+            slot_counter += 1
+    for student in student_dict:
+        result.write(student)
+        for company in student_dict[student]:
+            result.write("|"+company)
+        result.write("\n")
     result.close()
     file.close()
 
