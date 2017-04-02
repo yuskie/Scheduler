@@ -16,8 +16,8 @@ public class ScheduleCSVParser implements ScheduleParser {
 
 	private File scheduleFile;
 
-	public ScheduleCSVParser() {
-		scheduleFile = new File("spring_2017_schedule.csv");
+	public ScheduleCSVParser(String fileName) {
+		scheduleFile = new File(fileName);
 		if (!scheduleFile.exists()) {
 			System.out.println("File not found: " + scheduleFile.getAbsolutePath());
 			System.exit(1);
@@ -30,32 +30,24 @@ public class ScheduleCSVParser implements ScheduleParser {
 	public Schedule parseSchedule() {
 		Schedule theSchedule = new Schedule();
 		Map<Integer, List<Slot>> days = new HashMap<>();
-
-		List<Slot> day1 = new ArrayList<>();
-		List<Slot> day2 = new ArrayList<>();
-
 		try (Scanner fileScanner = new Scanner(scheduleFile)) {
-
 			while (fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
-				String[] lineCells = line.split("[|]+");
-				int lineDay = Integer.parseInt(lineCells[0]);
-
-				Slot theSlot = new Slot();
-				if (lineDay == 1) {
-					day1.add(theSlot);
+				String[] lineArray = line.split("[|]+");
+				int key = Integer.parseInt(lineArray[0]);
+				int slotAmount = Integer.parseInt(lineArray[1]);
+				List<Slot> slots = new ArrayList<>();
+				for(int i = 0; i<slotAmount; i++){
+					Slot newSlot = new Slot();
+					slots.add(newSlot);
 				}
-				if (lineDay == 2) {
-					day2.add(theSlot);
-				}
-
+				days.put(key, slots);
 			}
 
 		} catch (FileNotFoundException e) {
-
+			System.out.println("ERRROR PARSING");
+			System.exit(-1);
 		}
-		days.put(1, day1);
-		days.put(2, day2);
 		theSchedule.setDays(days);
 		return theSchedule;
 
